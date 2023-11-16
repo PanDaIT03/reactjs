@@ -1,0 +1,59 @@
+@import "@fontsource/montserrat"; // Defaults to weight 400
+@import "@fontsource/montserrat/400.css"; // Specify weight
+@import "@fontsource/montserrat/400-italic.css"; // Specify weight and style
+
+:root {
+    --bg-color: #1E1E2E;
+    --orange-4-default: #FF7506;
+    --text-stroke-text-and-stroke-2: #727288;
+    --white-transparent: rgba(255, 255, 255, 0.15);
+    ---bg-lighter: #2B2B3F;
+    --red: #FF4747;
+    --white: #FFF;
+    --blue: #347AFF;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 62.5%;
+}
+
+body {
+    height: 108rem;
+    color: var(--text-color);
+    font: normal 600 1.6rem/1.8em Montserrat;
+    line-height: 2.4rem;
+    text-rendering: optimizeSpeed;
+    background-color: var(--bg-color);
+    position: relative;
+}
+
+button {
+    border: none;
+    cursor: pointer;
+}
+
+ul {
+    list-style: none;
+}
+
+.--m-top-2rem {
+    margin-top: 2rem;
+}
+
+.--m-top-1rem {
+    margin-top: 1rem;
+}
+
+.--cursor-pointer {
+    cursor: pointer;
+}
+
+.w-585 {
+    width: 58.5rem;
+}

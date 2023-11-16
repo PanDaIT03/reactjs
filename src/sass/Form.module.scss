@@ -1,0 +1,36 @@
+.wrapper {
+    .title {
+        color: var(--white);
+        font-size: 3.6rem;
+        font-weight: 700;
+        line-height: 4.8rem;
+        letter-spacing: -0.072px;
+        margin: 2rem 0;
+    }
+
+    .action {
+        color: var(--orange-4-default);
+        text-decoration-line: underline;
+        cursor: pointer;
+        position: absolute;
+        left: 50%;
+        bottom: 5%;
+        transform: translateX(-50%);
+    }
+}
+
+.form-error {
+    .title {
+        color: var(--red);
+    }
+
+    button {
+        color: var(--orange-4-default);
+        border: .1rem solid var(--orange-4-default);
+        background-color: transparent;
+    }
+
+    button:hover {
+        background-color: var(--white-transparent);
+    }
+}

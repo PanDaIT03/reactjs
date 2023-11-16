@@ -1,0 +1,28 @@
+button {
+    gap: .8rem;
+    opacity: .9;
+
+    &:hover {
+        opacity: 1;
+    }
+}
+
+.primary {
+    color: #FFF;
+    text-align: center;
+    padding: 1.6rem 2.4rem;
+    border-radius: .8rem;
+    gap: .8rem;
+}
+
+.fill {
+    background: var(--orange-4-default);
+}
+
+.large {
+    font-family: Montserrat;
+    width: max-content;
+    font-size: 1.8rem;
+    font-weight: 500;
+    letter-spacing: 0.09px;
+}
