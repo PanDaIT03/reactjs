@@ -66,3 +66,10 @@
     color: var(--white);
     margin-bottom: 3.2rem;
 }
+
+.loading-spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(50%, -50%);
+}

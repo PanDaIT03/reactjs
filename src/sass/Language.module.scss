@@ -1,16 +1,19 @@
+.container {
+    display: flex;
+    justify-content: flex-end;
+    padding: 24px 75px 16px;
+}
+
 .language {
     width: max-content;
     padding: .8rem .4rem .8rem .8rem;
     border: .1rem solid #C8C8DB;
     border-radius: .4rem;
-    position: relative;
     cursor: pointer;
     opacity: .9;
     display: flex;
     justify-content: center;
     position: relative;
-    top: 24px;
-    left: 85%;
 
     &:has(.language__primary:hover) {
         background-color: var(--white-transparent);

@@ -2,14 +2,21 @@ import Home from "../pages/Home";
 import Login from "../pages/Login";
 import ResetPassword from "../pages/ResetPassword";
 import ErrorConnect from "../pages/ErrorConnect";
+import ForgotPassword from "../pages/ForgotPassword";
+import { DefaultLayout } from "../layout/DefaultLayout";
+import { HeaderOnly } from "../layout/HeaderOnly";
 
 const publicRoutes = [
-    { path: '/', component: Home },
     { path: '/login', component: Login },
+    { path: '/error', component: ErrorConnect, layout: null },
     { path: '/reset-password', component: ResetPassword },
-    { path: '/error', component: ErrorConnect },
+    { path: '/forgot-password', component: ForgotPassword }
+    // { path: '/', component: Home, layout: DefaultLayout }
 ];
 
-const privateRoutes = [{}];
+const protectedRoutes = [
+    { path: '/', component: Home, layout: DefaultLayout }
+    // { path: '/error', component: ErrorConnect, layout: HeaderOnly },
+];
 
-export { publicRoutes, privateRoutes };
+export { publicRoutes, protectedRoutes };

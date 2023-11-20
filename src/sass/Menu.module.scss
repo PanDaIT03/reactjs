@@ -5,12 +5,13 @@
 .menu-item {
     text-align: left;
     padding: .5rem 1rem;
+    cursor: pointer;
 
     &:hover {
         background-color: rgba(255, 255, 255, 0.15);
     }
 
-    &:hover > a {
+    &:hover>a {
         color: var(--orange-4-default);
     }
 
@@ -20,5 +21,30 @@
         line-height: 2rem;
         letter-spacing: 0.21px;
         transition: all .1s linear;
+    }
+}
+
+.sidebar {
+    width: max-content;
+    border-top-right-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+    background-color: var(--bg-color-2);
+    left: 100%;
+    position: absolute;
+
+    a {
+        color: var(--white);
+        font-size: 1.4rem;
+        font-weight: 400;
+        line-height: 2rem;
+        letter-spacing: 0.21px;
+    }
+
+    .menu-item {
+        display: flex;
+        padding: 12px 24px 9px 24px;
+        align-items: center;
+        gap: 10px;
+        align-self: stretch;
     }
 }

@@ -1,13 +1,14 @@
 import classNames from "classnames/bind";
-import { memo, useState } from "react";
+import { memo } from "react";
 
 import DropdownItem from "./DropdownItem";
+import { IGlobalConstantsType } from "../../../types";
+
 import style from "../../../sass/Menu.module.scss";
-import { ILanguage } from "../../../types";
 const cx = classNames.bind(style);
 
 interface MenuProps {
-    items: Array<ILanguage>
+    items: IGlobalConstantsType[]
     className?: string
     handleClick?: any
 };

@@ -9,14 +9,13 @@ const cx = classNames.bind(styles);
 
 function ErrorConnect() {
     const navigate = useNavigate();
-    
-    const handleSubmit = () => {
 
+    const handleSubmit = () => {
+        navigate("/forgot-password");
     };
 
     return (
         <div className={cx("container")}>
-            <Language />
             <div className={cx("content")}>
                 <div className={cx("main-logo")}>
                     <img src="../images/logo.png" alt="main_logo" />

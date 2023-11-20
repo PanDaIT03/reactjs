@@ -2,10 +2,17 @@ import classNames from "classnames/bind";
 import * as Yup from "yup";
 import { useEffect, useState } from "react";
 import { useFormik } from "formik";
+import { useSelector } from "react-redux";
+import { PropagateLoader } from "react-spinners";
+import { useLocation, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 import { Language } from "../../component/Language";
 import { Form } from "../../component/Form";
 import { Input } from "../../component/Input";
+import { resetPasswordAction } from "../../state/thunk";
+import useQuery from "../../hooks";
+import { RootState, useAppDispatch } from "../../state";
 
 import styles from "../../sass/Login.module.scss";
 const cx = classNames.bind(styles);
@@ -16,9 +23,17 @@ const initialValuesLogin = {
 };
 
 function ResetPassword() {
+    const navigate = useNavigate();
+    const dispatch = useAppDispatch();
+
+    const query = useQuery();
+    const emailAddress = query.get('emailAddress')?.toString();
+
     const [isPassword, setIsPassword] = useState(true);
     const [isConfirmPassword, setIsConfirmPassword] = useState(true);
     const [errorMessage, setErrorMessage] = useState('');
+    const userState = useSelector((state: RootState) => state.user);
+    const { status, loading } = userState;
 
     const formikResetPass = useFormik({
         initialValues: initialValuesLogin,
@@ -29,7 +44,8 @@ function ResetPassword() {
                 .required()
         }),
         onSubmit: (values) => {
-            console.log(values);
+            const email = emailAddress;
+            dispatch(resetPasswordAction({ email: email, password: values.password }));
         }
     });
     const {
@@ -56,13 +72,31 @@ function ResetPassword() {
         else setErrorMessage('');
     }, [errors, touched]);
 
+    useEffect(() => {
+        if (status === "password updated")
+            Swal.fire({
+                title: "Khôi phục mật khẩu thành công",
+                text: "Dùng mật khẩu mới của bạn để đăng nhập",
+                icon: "success",
+                confirmButtonText: "Đăng nhập",
+                width: 400
+            }).then((result) => {
+                if (result.isConfirmed)
+                    navigate("/login");
+            });
+    }, [userState]);
+
     const handleFocus = (field: string) => {
         formikResetPass.setFieldTouched(field, true);
     };
 
+    useEffect(() => {
+        if (!emailAddress)
+            navigate("/error");
+    }, []);
+
     return (
         <div className={cx("container")}>
-            <Language />
             <div className={cx("content")}>
                 <div className={cx("main-logo")}>
                     <img src="../images/logo.png" alt="main_logo" />
@@ -103,6 +137,10 @@ function ResetPassword() {
                     />
                     <p className={cx("error-message")}>{errorMessage && errorMessage}</p>
                 </Form>
+
+                {loading && <p className={cx("loading-spinner")}>
+                    <PropagateLoader color="#36d7b7" />
+                </p>}
             </div>
         </div>
     );

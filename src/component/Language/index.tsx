@@ -2,8 +2,8 @@ import classNames from "classnames/bind";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import Dropdown from "../Poper/Dropdown";
-import { LANGUAGE_ITEMS } from "../../constants/LanguageItems";
-import { ILanguage } from "../../types";
+import { LANGUAGE_ITEMS } from "../../constants";
+import { IGlobalConstantsType, ILanguage } from "../../types";
 
 import styles from "../../sass/Language.module.scss";
 const cx = classNames.bind(styles);
@@ -24,7 +24,7 @@ export const Language = () => {
         };
     });
 
-    const handleItemClick = useCallback((item: ILanguage) => {
+    const handleItemClick = useCallback((item: IGlobalConstantsType) => {
         console.log(item);
     }, []);
 
