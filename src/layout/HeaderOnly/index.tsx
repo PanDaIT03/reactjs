@@ -1,9 +1,5 @@
-import classNames from "classnames/bind";
 import { ReactNode } from "react";
-
-import { Language } from "../../component/Language";
-import styles from "../../sass/HeaderOnly.module.scss";
-const cx = classNames.bind(styles);
+import { Header } from "../component/Header";
 
 interface DefaultLayoutProps {
     children: ReactNode
@@ -11,11 +7,11 @@ interface DefaultLayoutProps {
 
 export const HeaderOnly = ({ children }: DefaultLayoutProps) => {
     return (
-        <div className={cx("wrapper")}>
-            <div className={cx("header")}>
-                <Language />
+        <div className="wrapper">
+            <div className="header">
+                <Header />
             </div>
-            <div className={cx("content")}>
+            <div className="content">
                 {children}
             </div>
         </div>

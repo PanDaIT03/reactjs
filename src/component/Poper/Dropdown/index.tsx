@@ -1,8 +1,8 @@
 import classNames from "classnames/bind";
-import { memo } from "react";
+import { MouseEventHandler, memo } from "react";
 
 import DropdownItem from "./DropdownItem";
-import { IGlobalConstantsType } from "../../../types";
+import { IGlobalConstantsType } from "~/types";
 
 import style from "../../../sass/Menu.module.scss";
 const cx = classNames.bind(style);
@@ -11,16 +11,19 @@ interface MenuProps {
     items: IGlobalConstantsType[]
     className?: string
     handleClick?: any
+    visible?: boolean
 };
 
 export const Dropdown = ({
     items = [],
     className,
-    handleClick
+    handleClick,
+    visible
 }: MenuProps) => {
     if (!className) className = "";
     const classes = cx("list-menu", {
-        [className]: className
+        [className]: className,
+        visible
     });
 
     const renderItems = () => (

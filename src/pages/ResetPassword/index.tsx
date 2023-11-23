@@ -1,20 +1,20 @@
-import classNames from "classnames/bind";
 import * as Yup from "yup";
+import Swal from "sweetalert2";
+import classNames from "classnames/bind";
 import { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import { useSelector } from "react-redux";
 import { PropagateLoader } from "react-spinners";
-import { useLocation, useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
-import { Language } from "../../component/Language";
-import { Form } from "../../component/Form";
-import { Input } from "../../component/Input";
-import { resetPasswordAction } from "../../state/thunk";
-import useQuery from "../../hooks";
-import { RootState, useAppDispatch } from "../../state";
+import useQuery from "~/hooks";
+import Button from "~/component/Button";
+import { Form } from "~/component/Form";
+import { Input } from "~/component/Input";
+import { resetPasswordAction } from "~/state/thunk/user";
+import { RootState, useAppDispatch } from "~/state";
 
-import styles from "../../sass/Login.module.scss";
+import styles from "~/sass/Login.module.scss";
 const cx = classNames.bind(styles);
 
 const initialValuesLogin = {
@@ -32,6 +32,7 @@ function ResetPassword() {
     const [isPassword, setIsPassword] = useState(true);
     const [isConfirmPassword, setIsConfirmPassword] = useState(true);
     const [errorMessage, setErrorMessage] = useState('');
+    
     const userState = useSelector((state: RootState) => state.user);
     const { status, loading } = userState;
 
@@ -44,7 +45,7 @@ function ResetPassword() {
                 .required()
         }),
         onSubmit: (values) => {
-            const email = emailAddress;
+            const email = emailAddress || "";
             dispatch(resetPasswordAction({ email: email, password: values.password }));
         }
     });
@@ -73,7 +74,7 @@ function ResetPassword() {
     }, [errors, touched]);
 
     useEffect(() => {
-        if (status === "password updated")
+        if (status === "updated")
             Swal.fire({
                 title: "Khôi phục mật khẩu thành công",
                 text: "Dùng mật khẩu mới của bạn để đăng nhập",
@@ -103,7 +104,6 @@ function ResetPassword() {
                 </div>
                 <Form
                     title="Đặt lại mật khẩu"
-                    buttonValue="Lưu mật khẩu"
                     className={cx("form-reset-password")}
                     handleFormSubmit={handleSubmit}
                 >
@@ -111,6 +111,7 @@ function ResetPassword() {
                         id="password"
                         name="password"
                         title="Mật khẩu mới"
+                        status={loading ? "disable" : "editable"}
                         className={cx("form-row")}
                         type={isPassword ? "password" : "text"}
                         value={values.password}
@@ -125,6 +126,7 @@ function ResetPassword() {
                         id="confirm-password"
                         name="confirmPassword"
                         title="Nhập lại mật khẩu mới"
+                        status={loading ? "disable" : "editable"}
                         className={cx("form-row")}
                         type={isConfirmPassword ? "password" : "text"}
                         value={values.confirmPassword}
@@ -136,11 +138,14 @@ function ResetPassword() {
                         onIconRightClick={() => setIsConfirmPassword(!isConfirmPassword)}
                     />
                     <p className={cx("error-message")}>{errorMessage && errorMessage}</p>
+                    <Button
+                        primary
+                        fill
+                        value="Xác nhận"
+                        buttonType="submit"
+                        loading={loading}
+                    />
                 </Form>
-
-                {loading && <p className={cx("loading-spinner")}>
-                    <PropagateLoader color="#36d7b7" />
-                </p>}
             </div>
         </div>
     );

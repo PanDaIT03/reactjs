@@ -1,10 +1,10 @@
 .wrapper {
     display: flex;
-    width: 17rem;
+    width: 100%;
     height: 108rem;
     background-color: var(---bg-dark);
+    padding: 3.9rem 0 18.7rem 0;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
     border-top-right-radius: 2.5rem;
     border-bottom-right-radius: 2.5rem;
@@ -12,7 +12,7 @@
 
 .logo {
     display: flex;
-    padding: 3.9rem 0 18.7rem 0;
+    margin-bottom: 11rem;
     flex-direction: column;
     align-items: center;
     gap: 11rem;
@@ -44,18 +44,42 @@
 }
 
 .item-wrapper {
+    cursor: pointer;
+    position: relative;
+    color: black;
+    transition: all .2s ease-in-out;
+
     &+& {
         margin-top: 2.4rem;
+    }
+
+    &:hover {
+        background-color: var(--white-transparent);
+
+        .menu-icon {
+            filter: invert(44%) sepia(99%) saturate(626%) hue-rotate(350deg) brightness(100%) contrast(110%);
+        }
+
+        .title {
+            color: var(--orange-4-default);
+        }
     }
 }
 
 .popup-item {
-    position: relative;
-
     .ellipsis {
         position: absolute;
         top: 50%;
         right: 10%;
         transform: translate(50%, -50%);
+    }
+}
+
+.visible {
+    .popup-item>div:nth-child(2) {
+        cursor: pointer;
+        pointer-events: all;
+        opacity: 1;
+        top: 100%;
     }
 }

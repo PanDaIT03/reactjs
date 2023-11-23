@@ -3,18 +3,29 @@
 @import "@fontsource/montserrat/400-italic.css"; // Specify weight and style
 
 :root {
-    --bg-color: #1E1E2E;
-    --bg-color-2: #30303F;
-    --orange-4-default: #FF7506;
-    --text-stroke-text-and-stroke-2: #727288;
-    --text-stroke-3: #C8C8DB;
-    --white-transparent: rgba(255, 255, 255, 0.15);
-    ---bg-lighter: #2B2B3F;
-    ---bg-dark: #020220;
-    --red: #FF4747;
     --white: #FFF;
+    --red: #FF4747;
     --blue: #347AFF;
     --emerald: #2ecc71;
+
+    ---bg-dark: #020220;
+    --bg-color: #1E1E2E;
+    --bg-color-2: #30303F;
+    ---bg-lighter: #2B2B3F;
+    --bg-lightest: #3E3E5B;
+
+    --white-transparent: rgba(255, 255, 255, 0.15);
+    
+    --orange-4-default: #FF7506;
+    --orange-5: #B65100;
+
+    --text-stroke-3: #C8C8DB;
+    --text-stroke-fill: #2F2F41;
+    --text-stroke-text-and-stroke: #F5F5FF;
+    --text-stroke-text-and-stroke-2: #727288;
+    
+    
+    --disabled-state: #3E3E50;
 }
 
 * {
@@ -60,4 +71,8 @@ ul {
 
 .w-585 {
     width: 58.5rem;
+}
+
+.--capitalize input{
+    text-transform: capitalize;
 }

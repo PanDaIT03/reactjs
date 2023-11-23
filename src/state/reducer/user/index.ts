@@ -1,13 +1,13 @@
-import { createSlice, current } from "@reduxjs/toolkit"
+import { createSlice } from "@reduxjs/toolkit"
 
-import { IUser } from "../../../types"
-import { checkLoginAction, resetPasswordAction } from "../../thunk";
+import { IUser } from "~/types";
+import { checkLoginAction, resetPasswordAction, updateUserAction } from "~/state/thunk/user";
 
 interface InitType {
     currentUser: IUser
     loading: boolean
-    status: "loggin successfully" | "loggin failed" | "password updated" |
-    "password update failed" | ""
+    status: "loggin successfully" | "loggin failed" | "updated" |
+    "update failed" | ""
 };
 
 const initialState: InitType = {
@@ -26,49 +26,81 @@ const userSlice = createSlice({
                 state.loading = true;
             })
             .addCase(checkLoginAction.fulfilled, (state, action) => {
-                if (action.payload != null) {
-                    let {
-                        id, firstName, lastName, dateOfBirth, email, numberPhone,
-                        userName, password, rolesId } = action.payload;
+                if (action.payload !== null) {
+                    const { role, user } = action.payload;
+                    if (role && user) {
+                        const userRole = role.find((item) => {
+                            return item.id === user.rolesId;
+                        });
 
-                    state.currentUser = {
-                        id: id, firstName: firstName, lastName: lastName, dateOfBirth: dateOfBirth, email: email,
-                        numberPhone: numberPhone, userName: userName, password: password, rolesId: rolesId
+                        state.currentUser = {
+                            id: user.id,
+                            avatar: user.avatar,
+                            firstName: user.firstName,
+                            lastName: user.lastName,
+                            dateOfBirth: user.dateOfBirth,
+                            email: user.email,
+                            phoneNumber: user.phoneNumber,
+                            userName: user.userName,
+                            password: user.password,
+                            rolesId: user.rolesId,
+                            role: userRole?.role
+                        };
+                        state.status = "loggin successfully";
+                        state.loading = false;
                     };
-                    state.status = "loggin successfully";
-                    state.loading = false;
                 } else {
                     state.currentUser = {} as IUser;
                     state.status = "loggin failed";
                     state.loading = false;
-                }
+                };
             })
             .addCase(checkLoginAction.rejected, state => {
+                state.status = "loggin failed";
                 state.loading = false;
             })
             .addCase(resetPasswordAction.pending, state => {
                 state.loading = true;
             })
             .addCase(resetPasswordAction.fulfilled, (state, action) => {
-                if (action.payload != null) {
-                    let {
-                        id, firstName, lastName, dateOfBirth, email, numberPhone,
-                        userName, password, rolesId } = action.payload;
-
+                if (action.payload !== undefined) {
                     state.currentUser = {
-                        id: id, firstName: firstName, lastName: lastName, dateOfBirth: dateOfBirth, email: email,
-                        numberPhone: numberPhone, userName: userName, password: password, rolesId: rolesId
+                        ...state.currentUser,
+                        password: action.payload.password
                     };
-                    state.status = "password updated";
+                    state.status = "updated";
                     state.loading = false;
                 } else {
                     state.currentUser = {} as IUser;
-                    state.status = "password update failed";
+                    state.status = "update failed";
                     state.loading = false;
                 }
             })
             .addCase(resetPasswordAction.rejected, state => {
+                state.status = "update failed";
                 state.loading = false;
+            })
+            .addCase(updateUserAction.pending, state => {
+                state.loading = true;
+            })
+            .addCase(updateUserAction.fulfilled, (state, action) => {
+                if (action.payload !== undefined) {
+                    let { firstName, lastName, dateOfBirth, phoneNumber } = action.payload;
+
+                    state.currentUser = {
+                        ...state.currentUser,
+                        firstName: firstName,
+                        lastName: lastName,
+                        dateOfBirth: dateOfBirth,
+                        phoneNumber: phoneNumber
+                    };
+                    state.status = "updated";
+                    state.loading = false;
+                };
+            })
+            .addCase(updateUserAction.rejected, state => {
+                state.status = "update failed";
+                state.loading = true;
             })
             .addDefaultCase((state) => {
                 return state;

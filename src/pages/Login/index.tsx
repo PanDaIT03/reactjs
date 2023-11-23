@@ -1,35 +1,35 @@
-import classNames from "classnames/bind";
 import * as Yup from "yup";
+import classNames from "classnames/bind";
 import { useFormik } from "formik";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { PropagateLoader } from "react-spinners";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-import { Input } from "../../component/Input";
-import { Form } from "../../component/Form";
-import { RootState, useAppDispatch } from "../../state";
-import { checkLoginAction } from "../../state/thunk";
+import Button from "~/component/Button";
+import { Input } from "~/component/Input";
+import { Form } from "~/component/Form";
+import { RootState, useAppDispatch } from "~/state";
+import { checkLoginAction } from "~/state/thunk/user";
+import { getRoleAction } from "~/state/thunk/role";
 
-import styles from "../../sass/Login.module.scss";
-import { Language } from "../../component/Language";
+import styles from "~/sass/Login.module.scss";
 const cx = classNames.bind(styles);
-
-const initialValuesLogin = {
-    name: '',
-    password: ''
-};
 
 function Login() {
     const navigate = useNavigate();
-    const location = useLocation();
+    const dispatch = useAppDispatch();
 
     const [isPassword, setIsPassword] = useState(true);
     const [errorMessage, setErrorMessage] = useState("");
 
-    const dispatch = useAppDispatch();
     const userState = useSelector((state: RootState) => state.user);
-    const { loading, status } = userState;
+    const { loading, status, currentUser } = userState;
+    const roleState = useSelector((state: RootState) => state.role);
+
+    const initialValuesLogin = {
+        name: currentUser.userName || 'daiphucduongvinh203@gmail.com',
+        password: currentUser.password || 'dai05102003'
+    };
 
     const formikLogin = useFormik({
         initialValues: initialValuesLogin,
@@ -39,7 +39,7 @@ function Login() {
         }),
         onSubmit: (values) => {
             const { name, password } = values;
-            dispatch(checkLoginAction({ userName: name, password: password }));
+            dispatch(checkLoginAction({ userName: name, password: password, role: roleState.role }));
         }
     });
     const {
@@ -51,11 +51,7 @@ function Login() {
     } = formikLogin;
 
     useEffect(() => {
-        if (Object.keys(loginTouched).length < 2
-            || Object.keys(loginErrors).length === 0) {
-            setErrorMessage('');
-            return;
-        };
+        if (!Object.keys(loginTouched).length) return;
 
         if (loginErrors.name && loginErrors.password)
             setErrorMessage('Hãy nhập tài khoản và mật khẩu');
@@ -68,13 +64,17 @@ function Login() {
 
     useEffect(() => {
         if (status === "loggin successfully")
-            navigate(location.state ?? "/");
+            navigate("/");
 
         if (status === "loggin failed")
             setErrorMessage("Sai tên đăng nhập hoặc mật khẩu");
         else
             setErrorMessage("");
-    }, [userState]);
+    }, [status]);
+
+    useEffect(() => {
+        dispatch(getRoleAction());
+    }, []);
 
     const handleFocus = (field: string) => {
         formikLogin.setFieldTouched(field, true);
@@ -92,16 +92,14 @@ function Login() {
                 </div>
                 <Form
                     title="Đăng nhập"
-                    buttonValue="Đăng nhập"
-                    actionValue="Quên mật khẩu"
                     className={cx("form-login")}
                     handleFormSubmit={handleSubmitLogin}
-                    onClickAction={handleClickAction}
                 >
                     <Input
                         id="name"
                         name="name"
                         title="Tên đăng nhập"
+                        status={loading ? "disable" : "editable"}
                         className={cx("form-row")}
                         value={loginValues.name}
                         touched={loginTouched.name}
@@ -113,6 +111,7 @@ function Login() {
                         id="password"
                         name="password"
                         title="Mật khẩu"
+                        status={loading ? "disable" : "editable"}
                         type={isPassword ? "password" : "text"}
                         value={loginValues.password}
                         touched={loginTouched.password}
@@ -127,11 +126,15 @@ function Login() {
                         <input id="cb-remember" type="checkbox" />
                         <label htmlFor="cb-remember">Ghi nhớ đăng nhập</label>
                     </div>
+                    <Button
+                        primary
+                        fill
+                        loading={loading}
+                        value="Đăng nhập"
+                        buttonType="submit"
+                    />
                 </Form>
-
-                {loading && <p className={cx("loading-spinner")}>
-                    <PropagateLoader color="#36d7b7" />
-                </p>}
+                <div className={cx("action")} onClick={handleClickAction}>Quên mật khẩu</div>
             </div>
         </div>
     );

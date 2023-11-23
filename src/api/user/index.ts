@@ -1,4 +1,4 @@
-import { collection, doc, getDoc, getDocs, onSnapshot, query, updateDoc, where } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, query, updateDoc, where } from "firebase/firestore";
 import { sendPasswordResetEmail } from "firebase/auth";
 
 import { IUser } from "../../types";
@@ -22,10 +22,10 @@ export const getUserByDocId = async (param: string) => {
     return (await getDoc(doc(fireStoreDatabase, 'users', param))).data();
 };
 
-export const getDocIdByField = async (field: string, param: string) => {
+export const getDocIdByField = async (field: string, param: number | string) => {
     const queryStmt = query(
         collection(fireStoreDatabase, 'users'),
-        where(`${field}`, '==', `${param}`)
+        where(`${field}`, '==', typeof param === "string" ? `${param}` : param)
     ),
         querySnapshot = await getDocs(queryStmt);
 
@@ -45,4 +45,13 @@ export const resetPassword = async (id: string, password: string) => {
 
     const userRef = doc(collectionRef, id);
     await updateDoc(userRef, updateUserPassword);
+};
+
+export const updateUser = async (data: Omit<IUser, "email" | "userName" |
+    "password" | "rolesId" | "role"> & { idCollection: string | undefined }) => {
+    const collectionRef = collection(fireStoreDatabase, 'users');
+    const updateUser = data;
+
+    const userRef = doc(collectionRef, data.idCollection);
+    await updateDoc(userRef, updateUser);
 };

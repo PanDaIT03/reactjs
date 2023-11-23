@@ -1,8 +1,8 @@
 import classNames from "classnames/bind";
 import { memo } from "react";
 
-import style from "../../../../sass/Menu.module.scss";
-import { IGlobalConstantsType } from "../../../../types";
+import style from "~/sass/Menu.module.scss";
+import { IGlobalConstantsType } from "~/types";
 const cx = classNames.bind(style);
 
 interface MenuItemProps {

@@ -2,17 +2,17 @@ import * as Yup from "yup";
 import classNames from "classnames/bind";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useFormik } from "formik";
 import PropagateLoader from "react-spinners/PropagateLoader";
 
-import { Form } from "../../component/Form";
-import { Language } from "../../component/Language";
-import { useFormik } from "formik";
-import { forgotPassword } from "../../api/user";
+import Button from "~/component/Button";
+import { Form } from "~/component/Form";
+import { forgotPassword } from "~/api/user";
 import { useState } from "react";
-import { Input } from "../../component/Input";
-import { RootState } from "../../state";
+import { Input } from "~/component/Input";
+import { RootState } from "~/state";
 
-import styles from "../../sass/Login.module.scss";
+import styles from "~/sass/Login.module.scss";
 const cx = classNames.bind(styles);
 
 const initialValues = {
@@ -63,17 +63,14 @@ function ForgotPassword() {
                 </div>
                 <Form
                     title="Khôi phục mật khẩu"
-                    buttonValue="Xác nhận"
-                    actionValue="Quay lại đăng nhập"
                     className={cx("form-recover")}
                     handleFormSubmit={handleSubmitRecover}
-                    onClickAction={handleClickAction}
                 >
                     <p className={cx("hint", !recover ? "active" : "inactive")}>
                         Vui lòng nhập địa chỉ email đã đăng ký để yêu cầu khôi phục mật khẩu
                     </p>
                     <p className={cx("hint", recover ? "active" : "inactive")}>
-                        Link khôi phục mật khẩu đã được gửi vào mail của bạn. Vui lòng kiểm tra mail.
+                        Link khôi phục mật khẩu đã được gửi vào mail của bạn. Vui lòng kiểm tra mail. <br />
                         Click vào đường link được đính kèm trong mail để chuyển đến trang đặt lại mật khẩu.
                     </p>
                     {!recover &&
@@ -82,6 +79,7 @@ function ForgotPassword() {
                                 id="email"
                                 name="email"
                                 title="Email"
+                                size="extra-large"
                                 className={cx("recover")}
                                 value={recoverValues.email}
                                 touched={recoverTouched.email}
@@ -92,7 +90,14 @@ function ForgotPassword() {
                             <p className={cx("error-message")}>{recoverErrors && recoverErrors.email}</p>
                         </>
                     }
+                    {!recover && <Button
+                        primary
+                        fill
+                        value="Xác nhận"
+                        buttonType="submit"
+                    />}
                 </Form>
+                <div className={cx("action")} onClick={handleClickAction}>Quay lại đăng nhập</div>
 
                 {loading && <p className={cx("loading-spinner")}>
                     <PropagateLoader color="#36d7b7" />

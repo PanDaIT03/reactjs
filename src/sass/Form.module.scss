@@ -7,30 +7,49 @@
         letter-spacing: -0.072px;
         margin: 2rem 0;
     }
-
-    .action {
-        color: var(--orange-4-default);
-        text-decoration-line: underline;
-        cursor: pointer;
-        position: absolute;
-        left: 50%;
-        bottom: 5%;
-        transform: translateX(-50%);
-    }
 }
 
+// form types
 .form-error {
     .title {
         color: var(--red);
     }
+}
 
-    button {
-        color: var(--orange-4-default);
-        border: .1rem solid var(--orange-4-default);
-        background-color: transparent;
-    }
+.form-change-password {
+    width: 55.2rem;
+    height: 51.2rem;
+    padding: 3.2rem 4rem;
+    border-radius: 1.6rem;
+    background-color: var(--bg-lightest);
 
-    button:hover {
-        background-color: var(--white-transparent);
+    input {
+        background-color: var(--bg-lighter);
     }
+}
+
+// type
+.dialog {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+// visible
+.visible,
+.invisible {
+    transition: all .2s linear;
+}
+
+.invisible {
+    top: 55%;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.visible {
+    top: 50%;
+    opacity: 1;
+    pointer-events: all;
 }

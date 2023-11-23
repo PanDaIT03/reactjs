@@ -1,17 +1,19 @@
 import classNames from "classnames/bind";
-import { useEffect, useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { memo, useEffect, useState } from "react";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 
-import styles from "../../sass/Input.module.scss";
+import styles from "~/sass/Input.module.scss";
 const cx = classNames.bind(styles);
 
 interface InputProps {
     id?: string
     name: string
-    type?: "text" | "password"
+    type?: "text" | "password" | "number" | "date"
     value: string
     title: string
+    size?: "small" | "medium" | "large" | "extra-large"
+    readOnly?: boolean
+    status?: "disable" | "editable"
     className?: string
     touched?: boolean,
     errorMessage?: string
@@ -21,17 +23,21 @@ interface InputProps {
     iconRightAwesome?: IconProp
     onFocus?: any
     onBlur?: any
+    inputRef?: any
     onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
     onIconLeftClick?: (event: React.MouseEvent<HTMLImageElement>) => void
     onIconRightClick?: (event: React.MouseEvent<HTMLImageElement>) => void
 };
 
-export const Input = ({
+export const Input = memo(({
     id,
     name,
     type = "text",
     value,
     title,
+    size,
+    readOnly,
+    status,
     className,
     touched = false,
     errorMessage,
@@ -41,10 +47,15 @@ export const Input = ({
     iconRightAwesome,
     onFocus,
     onBlur,
+    inputRef,
     onChange,
     onIconLeftClick,
-    onIconRightClick
+    onIconRightClick,
 }: InputProps) => {
+    if (!size) size = "medium";
+    if (!status) status = "editable";
+    if (!className) className = "";
+
     const props = {
         id: id,
         type: type,
@@ -54,10 +65,10 @@ export const Input = ({
         onFocus
     };
 
-    if (!className) className = "";
-
     const classes = cx("wrapper", {
-        [className]: className
+        [className]: className,
+        [size]: size,
+        [status]: status
     });
     const [isInValid, setIsInValid] = useState(false);
 
@@ -83,6 +94,8 @@ export const Input = ({
                 <input
                     {...props}
                     onBlur={handleBlur}
+                    readOnly={readOnly ? true : false}
+                    ref={inputRef}
                 />
                 {(iconLeft || iconRight && value !== "") &&
                     <img
@@ -95,4 +108,4 @@ export const Input = ({
             </div>
         </div>
     );
-};
+});

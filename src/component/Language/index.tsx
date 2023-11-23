@@ -2,7 +2,7 @@ import classNames from "classnames/bind";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import Dropdown from "../Poper/Dropdown";
-import { LANGUAGE_ITEMS } from "../../constants";
+import { LANGUAGE_ITEMS } from "~/constants";
 import { IGlobalConstantsType, ILanguage } from "../../types";
 
 import styles from "../../sass/Language.module.scss";

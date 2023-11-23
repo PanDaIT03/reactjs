@@ -1,5 +1,4 @@
 .wrapper {
-    width: 47.1rem;
     gap: .8rem;
     display: flex;
     flex-direction: column;
@@ -25,6 +24,7 @@
 .form-input {
     width: 100%;
     position: relative;
+    text-align: left;
 
     input {
         width: 100%;
@@ -38,7 +38,7 @@
         outline: none;
     }
 
-    input:focus{
+    input:focus {
         border: .1rem solid var(--blue);
     }
 
@@ -65,4 +65,28 @@
 
 .recover {
     width: 100%;
+}
+
+// size
+.small input {
+    width: 27.6rem;
+}
+
+.medium input {
+    width: 47.1rem;
+}
+
+.large input {
+    width: 57.3rem;
+}
+
+.extra-large input {
+    width: 60rem;
+}
+
+//status
+
+.disable input {
+    background-color: var(--disabled-state);
+    pointer-events: none;
 }

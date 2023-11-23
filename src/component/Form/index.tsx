@@ -1,54 +1,44 @@
 import classNames from "classnames/bind";
+import { memo } from "react";
 
-import styles from "../../sass/Form.module.scss";
-import Button from "../Button";
+import styles from "~/sass/Form.module.scss";
 const cx = classNames.bind(styles);
 
 interface FormProps {
-    title: string
+    title?: string
     children?: React.ReactNode
-    buttonValue: string
-    btnType?: "button" | "submit"
-    actionValue?: string
     className?: string
-    onClickAction?: (event: React.MouseEvent<HTMLDivElement>) => void
+    type?: "dialog" | "normal"
+    visible?: "visible" | "invisible" | ""
     handleFormSubmit?: (event: React.MouseEvent<HTMLFormElement>) => void
 }
 
-export const Form = ({
+export const Form = memo(({
     title,
     children,
-    buttonValue,
-    btnType = "submit",
-    actionValue,
     className,
-    onClickAction,
+    type,
+    visible,
     handleFormSubmit,
 }: FormProps) => {
     if (!className) className = "";
+    if (!type) type = "normal";
+    if (!visible) visible = "";
+
+    console.log("re-render");
 
     const classes = cx("wrapper", {
-        [className]: className
+        [className]: className,
+        [type]: type,
+        [visible]: visible
     });
 
     return (
         <div className={classes}>
-            <div className={cx("title")}>{title}</div>
+            {title !== undefined && <div className={cx("title")}>{title}</div>}
             <form className={cx("form")} onSubmit={handleFormSubmit}>
                 {children}
-
-                {buttonValue !== "" &&
-                    <Button primary fill size="large" buttonType={btnType}>
-                        {buttonValue}
-                    </Button>
-                }
             </form>
-            {actionValue && <div
-                className={cx("action")}
-                onClick={onClickAction}
-            >
-                {actionValue}
-            </div>}
         </div>
     );
-};
+});

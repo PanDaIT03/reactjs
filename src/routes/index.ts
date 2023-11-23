@@ -8,9 +8,9 @@ import { HeaderOnly } from "../layout/HeaderOnly";
 
 const publicRoutes = [
     { path: '/login', component: Login },
-    { path: '/error', component: ErrorConnect, layout: null },
+    { path: '/error', component: ErrorConnect, layout: HeaderOnly },
     { path: '/reset-password', component: ResetPassword },
-    { path: '/forgot-password', component: ForgotPassword }
+    { path: '/forgot-password', component: ForgotPassword },
     // { path: '/', component: Home, layout: DefaultLayout }
 ];
 

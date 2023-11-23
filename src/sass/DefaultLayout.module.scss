@@ -9,3 +9,43 @@
         flex: 1;
     }
 }
+
+.account {
+    width: 13.2rem;
+    height: 4rem;
+    gap: .8rem;
+    margin-left: 2.4rem;
+    border-radius: .4rem;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.avatar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    img {
+        width: 4rem;
+        height: 4rem;
+        border-radius: 20rem;
+        object-fit: cover;
+    }
+}
+
+.name {
+    color: var(--text-stroke-text-and-stroke);
+    text-align: center;
+    letter-spacing: -0.032px;
+}
+
+.role {
+    color: var(--orange-5);
+    text-align: left;
+    font-size: 1.4rem;
+    font-weight: 500;
+    line-height: normal;
+    letter-spacing: 0.21px;
+    text-transform: capitalize;
+}
