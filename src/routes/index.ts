@@ -1,22 +1,29 @@
-import Home from "../pages/Home";
-import Login from "../pages/Login";
-import ResetPassword from "../pages/ResetPassword";
-import ErrorConnect from "../pages/ErrorConnect";
-import ForgotPassword from "../pages/ForgotPassword";
+// Layout
 import { DefaultLayout } from "../layout/DefaultLayout";
 import { HeaderOnly } from "../layout/HeaderOnly";
 
+// Pages
+import LoginPage from "../pages/LoginPage";
+import ErrorConnectPage from "../pages/ErrorConnectPage";
+import ResetPasswordPage from "../pages/ResetPasswordPage";
+import ForgotPasswordPage from "../pages/ForgotPasswordPage";
+import EntrustmentContractPage from "~/pages/EntrustmentContractPage";
+import BasicInfomationPage from "../pages/BasicInfomationPage";
+import ContractPage from "~/pages/ContractPage";
+import { Detail as AuthorizationDetail } from "~/pages/AuthorizationContractPage/Detail";
+
 const publicRoutes = [
-    { path: '/login', component: Login },
-    { path: '/error', component: ErrorConnect, layout: HeaderOnly },
-    { path: '/reset-password', component: ResetPassword },
-    { path: '/forgot-password', component: ForgotPassword },
-    // { path: '/', component: Home, layout: DefaultLayout }
+    { path: '/login', component: LoginPage },
+    { path: '/error', component: ErrorConnectPage, layout: HeaderOnly },
+    { path: '/reset-password', component: ResetPasswordPage },
+    { path: '/forgot-password', component: ForgotPasswordPage },
 ];
 
 const protectedRoutes = [
-    { path: '/', component: Home, layout: DefaultLayout }
-    // { path: '/error', component: ErrorConnect, layout: HeaderOnly },
+    { path: '/basic-info', component: BasicInfomationPage, layout: DefaultLayout },
+    { path: '/contract-management', component: ContractPage, layout: DefaultLayout },
+    { path: '/contract-management/authorization-contract/:contractCode', component: AuthorizationDetail, layout: DefaultLayout },
+    // { path: '/contract-management/detail/:contractCode', component: DetailPage, layout: DefaultLayout }
 ];
 
 export { publicRoutes, protectedRoutes };

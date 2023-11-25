@@ -1,4 +1,4 @@
 export interface IRole {
-    id: string
+    docId: string
     role: string
 };

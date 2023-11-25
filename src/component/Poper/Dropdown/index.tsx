@@ -1,27 +1,27 @@
 import classNames from "classnames/bind";
-import { MouseEventHandler, memo } from "react";
+import { memo } from "react";
 
-import DropdownItem from "./DropdownItem";
+import { DropdownItem } from "./DropdownItem";
 import { IGlobalConstantsType } from "~/types";
 
-import style from "../../../sass/Menu.module.scss";
+import style from "~/sass/Menu.module.scss";
 const cx = classNames.bind(style);
 
 interface MenuProps {
     items: IGlobalConstantsType[]
     className?: string
-    handleClick?: any
     visible?: boolean
+    onClick: (item: IGlobalConstantsType) => void
 };
 
-export const Dropdown = ({
+export const Dropdown = memo(({
     items = [],
     className,
-    handleClick,
-    visible
+    visible,
+    onClick
 }: MenuProps) => {
     if (!className) className = "";
-    const classes = cx("list-menu", {
+    const classes = cx("wrapper", {
         [className]: className,
         visible
     });
@@ -31,16 +31,16 @@ export const Dropdown = ({
             return <DropdownItem
                 key={index}
                 data={item}
-                handleClickOption={handleClick}
+                handleClickOption={onClick}
             />
         })
     );
 
     return (
         <div className={classes}>
-            <ul className={cx("menu-items")}>{renderItems()}</ul>
+            <div className={cx("list-menu")}>
+                <ul className={cx("menu-items")}>{renderItems()}</ul>
+            </div>
         </div>
     );
-}
-
-export default memo(Dropdown);
+});

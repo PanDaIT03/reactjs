@@ -19,7 +19,7 @@ const initialValues = {
     email: ''
 };
 
-function ForgotPassword() {
+function ForgotPasswordPage() {
     const navigate = useNavigate();
 
     const [recover, setRecover] = useState(false);
@@ -107,4 +107,4 @@ function ForgotPassword() {
     );
 };
 
-export default ForgotPassword;
+export default ForgotPasswordPage;

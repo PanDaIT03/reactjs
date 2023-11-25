@@ -11,7 +11,7 @@ import useQuery from "~/hooks";
 import Button from "~/component/Button";
 import { Form } from "~/component/Form";
 import { Input } from "~/component/Input";
-import { resetPasswordAction } from "~/state/thunk/user";
+import { resetPasswordAction } from "~/state/thunk/user/user";
 import { RootState, useAppDispatch } from "~/state";
 
 import styles from "~/sass/Login.module.scss";
@@ -22,7 +22,7 @@ const initialValuesLogin = {
     confirmPassword: ''
 };
 
-function ResetPassword() {
+function ResetPasswordPage() {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
 
@@ -151,4 +151,4 @@ function ResetPassword() {
     );
 };
 
-export default ResetPassword;
+export default ResetPasswordPage;

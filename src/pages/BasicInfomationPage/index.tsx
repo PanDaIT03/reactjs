@@ -6,14 +6,15 @@ import { useEffect, useRef, useState } from "react";
 
 import Button from "~/component/Button";
 import { IUser } from "~/types";
-import { RootState, useAppDispatch } from "~/state";
 import { Form } from "~/component/Form";
+import { formatDate } from "~/constants";
 import { Input } from "~/component/Input";
 import { ActionBar } from "~/component/ActionBar";
+import { RootState, useAppDispatch } from "~/state";
 import { ActionBarItem } from "~/component/ActionBar/ActionBarItem";
-import { resetPasswordAction, updateUserAction } from "~/state/thunk/user";
+import { resetPasswordAction, updateUserAction } from "~/state/thunk/user/user";
 
-import styles from "~/sass/Home.module.scss";
+import styles from "~/sass/BasicInfomation.module.scss";
 const cx = classNames.bind(styles);
 
 const initialPasswordValue = {
@@ -22,7 +23,7 @@ const initialPasswordValue = {
     confirmPassword: ""
 };
 
-function Home() {
+function BasicInfomationPage() {
     const dispatch = useAppDispatch();
 
     const firstNameRef = useRef<HTMLDivElement>(null);
@@ -64,6 +65,8 @@ function Home() {
             phoneNumber: Yup.string().required().matches(/(84|0[3|5|7|8|9])+([0-9]{8})\b/g, "phone not match"),
         }),
         onSubmit: (values) => {
+            console.log(values);
+            
             const data: Omit<IUser, "email" | "userName" |
                 "password" | "rolesId" | "role"> = {
                 id: values.id,
@@ -379,4 +382,4 @@ function Home() {
     );
 };
 
-export default Home;
+export default BasicInfomationPage;

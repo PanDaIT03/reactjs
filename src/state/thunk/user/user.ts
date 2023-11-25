@@ -11,15 +11,15 @@ interface IUpdatePassword {
 
 export const checkLoginAction = createAsyncThunk(
     'user/checkLogin',
-    async (data: Pick<IUser, "userName" | "password"> & { role: IRole[] }, thunkAPI) => {
-        const { role } = data
+    async (data: Pick<IUser, "userName" | "password"> & { roles: IRole[] }, thunkAPI) => {
+        const { roles } = data
         const userId = await checkLogin(data);
 
         if (userId) {
             const user = await getUserByDocId(userId);
             return {
                 user,
-                role
+                roles
             };
         };
         return null;

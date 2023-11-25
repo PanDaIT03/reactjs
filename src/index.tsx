@@ -7,6 +7,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import GlobalStyle from './sass/GlobalStyle/index';
 import { store } from './state';
+import { AppProvider as ContextProvider } from "~/context/SidebarContext";
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -15,7 +16,7 @@ root.render(
   <React.StrictMode>
     <GlobalStyle>
       <Provider store={store}>
-        <App />
+        <ContextProvider><App /></ContextProvider>
       </Provider>
     </GlobalStyle>
   </React.StrictMode>

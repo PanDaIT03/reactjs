@@ -68,20 +68,24 @@
 }
 
 // size
-.small input {
+.small {
     width: 27.6rem;
 }
 
-.medium input {
+.medium {
     width: 47.1rem;
 }
 
-.large input {
+.large {
     width: 57.3rem;
 }
 
-.extra-large input {
+.extra-large {
     width: 60rem;
+}
+
+.custom {
+    width: 100%;
 }
 
 //status

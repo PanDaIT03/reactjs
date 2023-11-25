@@ -1,16 +1,25 @@
 import classNames from "classnames/bind";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
-import Dropdown from "../Poper/Dropdown";
-import { LANGUAGE_ITEMS } from "~/constants";
-import { IGlobalConstantsType, ILanguage } from "../../types";
+import { Dropdown } from "../Poper/Dropdown";
+import { LANGUAGE_ITEMS, handleClickDropDown } from "~/constants";
+import { IGlobalConstantsType } from "~/types";
 
-import styles from "../../sass/Language.module.scss";
+import styles from "~/sass/Language.module.scss";
 const cx = classNames.bind(styles);
 
+const initStateLanguage = {
+    id: 1,
+    title: "Tiếng Việt",
+    icon: "./images/vietnam_flag.png"
+};
+
 export const Language = () => {
-    const [open, setOpen] = useState(false);
     const menuRef = useRef<HTMLDivElement>(null);
+
+    const [open, setOpen] = useState(false);
+    const [languages, setLanguages] = useState<IGlobalConstantsType[]>(LANGUAGE_ITEMS);
+    const [language, setLanguage] = useState<IGlobalConstantsType>(initStateLanguage);
 
     useEffect(() => {
         let handler = (event: MouseEvent) => {
@@ -24,8 +33,20 @@ export const Language = () => {
         };
     });
 
+    const handleLanguage = (item: IGlobalConstantsType) => {
+        let newLanguages = handleClickDropDown(item, LANGUAGE_ITEMS);
+
+        setLanguages(newLanguages);
+        setLanguage(item || initStateLanguage);
+    };
+
+    useEffect(() => {
+        handleLanguage(initStateLanguage);
+    }, []);
+
     const handleItemClick = useCallback((item: IGlobalConstantsType) => {
-        console.log(item);
+        handleLanguage(item);
+        setOpen(false);
     }, []);
 
     return (
@@ -35,16 +56,16 @@ export const Language = () => {
                     className={cx("language__primary")}
                     onClick={() => setOpen(!open)}
                 >
-                    <span>Tiếng Việt</span>
-                    <img src="./images/vietnam_flag.png" alt="viet nam" />
+                    <div className={cx("title")}>{language.title}</div>
+                    <img src={language.icon} className={cx("language-icon")} />
                     <img src="./images/angle-down.png" alt="agle down" />
                 </div>
-                <div className={cx('language_menu', open ? "active" : "")}>
-                    <Dropdown
-                        items={LANGUAGE_ITEMS}
-                        handleClick={handleItemClick}
-                    />
-                </div>
+                <Dropdown
+                    items={languages}
+                    className={cx("language-dropdown")}
+                    onClick={handleItemClick}
+                    visible={open}
+                />
             </div>
         </div>
     );

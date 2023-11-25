@@ -8,22 +8,23 @@ const cx = classNames.bind(styles);
 interface InputProps {
     id?: string
     name: string
-    type?: "text" | "password" | "number" | "date"
     value: string
-    title: string
-    size?: "small" | "medium" | "large" | "extra-large"
-    readOnly?: boolean
-    status?: "disable" | "editable"
+    title?: string
+    placeholder?: string
     className?: string
-    touched?: boolean,
     errorMessage?: string
     iconLeft?: string //path
     iconRight?: string //path
+    status?: "disable" | "editable"
+    type?: "text" | "password" | "number" | "date"
+    size?: "small" | "medium" | "large" | "extra-large" | "custom"
+    onBlur?: any
+    onFocus?: any
+    inputRef?: any
+    touched?: boolean
+    readOnly?: boolean
     iconLeftAwesome?: IconProp
     iconRightAwesome?: IconProp
-    onFocus?: any
-    onBlur?: any
-    inputRef?: any
     onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
     onIconLeftClick?: (event: React.MouseEvent<HTMLImageElement>) => void
     onIconRightClick?: (event: React.MouseEvent<HTMLImageElement>) => void
@@ -51,6 +52,7 @@ export const Input = memo(({
     onChange,
     onIconLeftClick,
     onIconRightClick,
+    ...passProps
 }: InputProps) => {
     if (!size) size = "medium";
     if (!status) status = "editable";
@@ -61,8 +63,9 @@ export const Input = memo(({
         type: type,
         name: name,
         value: value,
+        onFocus,
         onChange,
-        onFocus
+        ...passProps
     };
 
     const classes = cx("wrapper", {
@@ -89,7 +92,7 @@ export const Input = memo(({
 
     return (
         <div className={classes}>
-            <label htmlFor={id}>{title}:</label>
+            {title && <label htmlFor={id}>{title}:</label>}
             <div className={cx("form-input", isInValid ? "error" : "")}>
                 <input
                     {...props}

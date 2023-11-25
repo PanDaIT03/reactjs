@@ -3,11 +3,13 @@ import { useDispatch } from "react-redux";
 
 import { userReducer } from "./reducer/user";
 import { roleReducer } from "./reducer/role";
+import { contractReducer } from "./reducer/contract";
 
 export const store = configureStore({
     reducer: {
         user: userReducer,
-        role: roleReducer
+        role: roleReducer,
+        contract: contractReducer
     }
 });
 

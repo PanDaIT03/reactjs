@@ -1,13 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getRoleAction } from "~/state/thunk/role";
+
+import { getRoleAction } from "~/state/thunk/role/role";
 import { IRole } from "~/types";
 
-export interface InitType {
-    role: IRole[]
+interface InitType {
+    roles: IRole[]
 };
 
 const initialState: InitType = {
-    role: []
+    roles: []
 };
 
 const roleSlice = createSlice({
@@ -15,9 +16,13 @@ const roleSlice = createSlice({
     initialState: initialState,
     reducers: {},
     extraReducers(builder) {
-        builder.addCase(getRoleAction.fulfilled, (state, action) => {
-            state.role = action.payload;
-        })
+        builder
+            .addCase(getRoleAction.fulfilled, (state, action) => {
+                state.roles = action.payload;
+            })
+            .addDefaultCase(state => {
+                return state;
+            })
     }
 });
 

@@ -1,10 +1,12 @@
 import classNames from "classnames/bind";
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useContext, useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import { Sidebar } from "../component/Sidebar";
 import { Header } from "../component/Header";
 import { RootState } from "~/state";
+import { SidebarContext } from "~/context/SidebarContext";
 
 import styles from "~/sass/DefaultLayout.module.scss";
 const cx = classNames.bind(styles);
@@ -14,6 +16,9 @@ interface DefaultLayoutProps {
 };
 
 export const DefaultLayout = ({ children }: DefaultLayoutProps) => {
+    const navigate = useNavigate();
+
+    const { setActive } = useContext(SidebarContext);
     const userState = useSelector((state: RootState) => state.user);
     const { currentUser } = userState;
 
@@ -33,12 +38,12 @@ export const DefaultLayout = ({ children }: DefaultLayoutProps) => {
         <div className={cx("wrapper")}>
             <div className={cx("container")}>
                 <div className={cx("container_left")}>
-                    <Sidebar />
+                    <Sidebar onClick={() => setActive(true)} />
                 </div>
                 <div className={cx("container_right")}>
                     <div className={cx("header")}>
                         <Header>
-                            <div className={cx("account")}>
+                            <div className={cx("account")} onClick={() => navigate("/basic-info")}>
                                 <div className={cx("avatar")}>
                                     <img src={`./images/${currentUser.avatar}`} />
                                 </div>

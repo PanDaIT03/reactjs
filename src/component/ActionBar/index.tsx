@@ -5,7 +5,7 @@ import styles from "~/sass/ActionBar.module.scss";
 const cx = classNames.bind(styles);
 
 interface ActionBarProps {
-    visible: boolean
+    visible?: boolean
     children: ReactNode
 };
 

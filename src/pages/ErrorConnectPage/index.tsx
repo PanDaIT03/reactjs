@@ -7,7 +7,7 @@ import { Form } from "~/component/Form";
 import styles from "~/sass/Login.module.scss";
 const cx = classNames.bind(styles);
 
-function ErrorConnect() {
+function ErrorConnectPage() {
     const navigate = useNavigate();
 
     const handleSubmit = useCallback((event: React.MouseEvent<HTMLFormElement>) => {
@@ -42,4 +42,4 @@ function ErrorConnect() {
     );
 };
 
-export default ErrorConnect;
+export default ErrorConnectPage;

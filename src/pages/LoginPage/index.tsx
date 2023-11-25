@@ -3,21 +3,22 @@ import classNames from "classnames/bind";
 import { useFormik } from "formik";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import Button from "~/component/Button";
 import { Input } from "~/component/Input";
 import { Form } from "~/component/Form";
 import { RootState, useAppDispatch } from "~/state";
-import { checkLoginAction } from "~/state/thunk/user";
-import { getRoleAction } from "~/state/thunk/role";
+import { checkLoginAction } from "~/state/thunk/user/user";
+import { getRoleAction } from "~/state/thunk/role/role";
 
 import styles from "~/sass/Login.module.scss";
 const cx = classNames.bind(styles);
 
-function Login() {
+function LoginPage() {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
+    const location = useLocation();
 
     const [isPassword, setIsPassword] = useState(true);
     const [errorMessage, setErrorMessage] = useState("");
@@ -39,7 +40,7 @@ function Login() {
         }),
         onSubmit: (values) => {
             const { name, password } = values;
-            dispatch(checkLoginAction({ userName: name, password: password, role: roleState.role }));
+            dispatch(checkLoginAction({ userName: name, password: password, roles: roleState.roles }));
         }
     });
     const {
@@ -64,7 +65,7 @@ function Login() {
 
     useEffect(() => {
         if (status === "loggin successfully")
-            navigate("/");
+            navigate(location.state?.from ?? "/contract-management");
 
         if (status === "loggin failed")
             setErrorMessage("Sai tên đăng nhập hoặc mật khẩu");
@@ -140,4 +141,4 @@ function Login() {
     );
 };
 
-export default Login;
+export default LoginPage;

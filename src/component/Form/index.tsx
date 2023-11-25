@@ -25,8 +25,6 @@ export const Form = memo(({
     if (!type) type = "normal";
     if (!visible) visible = "";
 
-    console.log("re-render");
-
     const classes = cx("wrapper", {
         [className]: className,
         [type]: type,

@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit"
 
 import { IUser } from "~/types";
-import { checkLoginAction, resetPasswordAction, updateUserAction } from "~/state/thunk/user";
+import { checkLoginAction, resetPasswordAction, updateUserAction } from "~/state/thunk/user/user";
 
 interface InitType {
     currentUser: IUser
@@ -27,10 +27,10 @@ const userSlice = createSlice({
             })
             .addCase(checkLoginAction.fulfilled, (state, action) => {
                 if (action.payload !== null) {
-                    const { role, user } = action.payload;
-                    if (role && user) {
-                        const userRole = role.find((item) => {
-                            return item.id === user.rolesId;
+                    const { roles, user } = action.payload;
+                    if (roles && user) {
+                        const userRole = roles.find((item) => {
+                            return item.docId === user.rolesId;
                         });
 
                         state.currentUser = {
